@@ -6,8 +6,8 @@ public class movement : MonoBehaviour
 {
     Rigidbody rb;
     bool startMove = false;
-    public float speed = 0.2f;
-    public float jump = 10f;
+    public float speed = 5f;
+    public float jump = 5f;
 
     bool canJump = true;
     // Start is called before the first frame update
@@ -35,7 +35,7 @@ public class movement : MonoBehaviour
         if (startMove)
         {
             //rb.AddForce(gameObject.transform.forward * speed, ForceMode.Force);
-            transform.position = transform.position + transform.forward * speed;
+            transform.position = transform.position + transform.forward * speed * Time.deltaTime;
         }
     }
 
