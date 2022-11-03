@@ -10,6 +10,7 @@ public class movement : MonoBehaviour
     public float jump = 5f;
 
     bool canJump = true;
+    public GameObject control;
     // Start is called before the first frame update
     void Start()
     {
@@ -45,5 +46,16 @@ public class movement : MonoBehaviour
         rb.velocity = jump * transform.up;
         yield return new WaitForSeconds(0.5f);
         canJump = true;
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.CompareTag("Pipe"))
+        {
+            control.GetComponent<WinLose>().SetStop(true);
+        }
+        else
+        {
+            control.GetComponent<WinLose>().SetStop(false);
+        }
     }
 }
