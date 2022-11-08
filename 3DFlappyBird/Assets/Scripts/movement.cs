@@ -8,13 +8,16 @@ public class movement : MonoBehaviour
     bool startMove = false;
     public float speed = 5f;
     public float jump = 5f;
-    [SerializeField] GameObject control;
+    [SerializeField] GameObject control, left, right;
+    int positions;
+    public bool canMove;
 
     bool canJump = true;
     // Start is called before the first frame update
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>();
+        positions = 1;
     }
 
     // Update is called once per frame
@@ -29,8 +32,24 @@ public class movement : MonoBehaviour
             //    StartCoroutine(jumping());
             //    StopCoroutine(jumping());
             //}
-            startMove = true;
+            if (!canMove)
+            {
+                startMove = true;
+            }
             rb.useGravity = true;
+        }
+        if (canMove)
+        {
+            if (Input.GetKeyDown(KeyCode.A) && positions > 0)
+            {
+                transform.position += new Vector3(left.transform.position.x, 0, 0);
+                positions--;
+            }
+            if (Input.GetKeyDown(KeyCode.D) && positions < 2)
+            {
+                transform.position += new Vector3(right.transform.position.x, 0, 0);
+                positions++;
+            }
         }
 
         if (startMove)
@@ -49,7 +68,7 @@ public class movement : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.CompareTag("Pipe"))
+        if (collision.collider.CompareTag("Pipe") || collision.collider.CompareTag("Ground"))
         {
             control.GetComponent<Lose>().SetStop(true);
         }
