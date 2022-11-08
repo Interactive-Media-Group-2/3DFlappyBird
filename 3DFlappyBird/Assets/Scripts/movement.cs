@@ -8,6 +8,9 @@ public class movement : MonoBehaviour
     bool startMove = false;
     public float speed = 5f;
     public float jump = 5f;
+    [SerializeField] GameObject control;
+    public static int score;
+    public static int highscore;
 
     bool canJump = true;
     // Start is called before the first frame update
@@ -28,7 +31,7 @@ public class movement : MonoBehaviour
             //    StartCoroutine(jumping());
             //    StopCoroutine(jumping());
             //}
-            startMove = true;
+            //startMove = true;
             rb.useGravity = true;
         }
 
@@ -36,6 +39,11 @@ public class movement : MonoBehaviour
         {
             //rb.AddForce(gameObject.transform.forward * speed, ForceMode.Force);
             transform.position = transform.position + transform.forward * speed * Time.deltaTime;
+        }
+
+        if (score > highscore)
+        {
+            highscore = score;
         }
     }
 
@@ -45,5 +53,20 @@ public class movement : MonoBehaviour
         rb.velocity = jump * transform.up;
         yield return new WaitForSeconds(0.5f);
         canJump = true;
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.CompareTag("Pipe"))
+        {
+            control.GetComponent<Lose>().SetStop(true);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Score")
+        {
+            score++;
+        }
     }
 }
