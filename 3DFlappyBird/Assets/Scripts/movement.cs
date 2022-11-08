@@ -54,4 +54,11 @@ public class movement : MonoBehaviour
             control.GetComponent<Lose>().SetStop(true);
         }
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Points"))
+        {
+            control.GetComponent<Lose>().AddScore();
+        }
+    }
 }
