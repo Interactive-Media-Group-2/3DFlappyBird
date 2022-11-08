@@ -11,6 +11,11 @@ public class movement : MonoBehaviour
     [SerializeField] GameObject control;
     public static int score;
     public static int highscore;
+    [SerializeField] AudioClip scoreSound;
+    [SerializeField] AudioClip coinSound;
+    [SerializeField] AudioClip deathSound;
+    [SerializeField] AudioSource sfxSource;
+    [SerializeField] MeshRenderer _coin;
 
     bool canJump = true;
     // Start is called before the first frame update
@@ -58,6 +63,7 @@ public class movement : MonoBehaviour
     {
         if (collision.collider.CompareTag("Pipe"))
         {
+            sfxSource.PlayOneShot(deathSound);
             control.GetComponent<Lose>().SetStop(true);
         }
     }
@@ -66,12 +72,22 @@ public class movement : MonoBehaviour
     {
         if (other.tag == "Score")
         {
+            sfxSource.PlayOneShot(scoreSound);
             score++;
         }
 
         if (other.tag == "Coin")
         {
+            StartCoroutine(SetActive());
+            sfxSource.PlayOneShot(coinSound);
             score += 2;
         }
+    }
+
+    IEnumerator SetActive()
+    {
+        _coin.enabled = false;
+        yield return new WaitForSeconds(0.5f);
+        _coin.enabled = true;
     }
 }
