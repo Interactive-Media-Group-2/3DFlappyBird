@@ -8,6 +8,7 @@ public class movement : MonoBehaviour
     bool startMove = false;
     public float speed = 5f;
     public float jump = 5f;
+    [SerializeField] GameObject control;
 
     bool canJump = true;
     // Start is called before the first frame update
@@ -45,5 +46,12 @@ public class movement : MonoBehaviour
         rb.velocity = jump * transform.up;
         yield return new WaitForSeconds(0.5f);
         canJump = true;
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.CompareTag("Pipe"))
+        {
+            control.GetComponent<Lose>().SetStop(true);
+        }
     }
 }
