@@ -7,7 +7,7 @@ using UnityEngine.SocialPlatforms.Impl;
 
 public class Lose : MonoBehaviour
 {
-    [SerializeField] GameObject restartButton, board;
+    [SerializeField] GameObject restartButton, board, backButton;
     public bool stop;
     public TMP_Text scoreBoard, finalScore;
     public float score = 0;
@@ -26,6 +26,7 @@ public class Lose : MonoBehaviour
             board.SetActive(true);
             finalScore.gameObject.SetActive(true);
             scoreBoard.gameObject.SetActive(true);
+            backButton.SetActive(true);
             Stop();
         }
         else
@@ -33,6 +34,7 @@ public class Lose : MonoBehaviour
             restartButton?.SetActive(false);
             board.SetActive(false);
             finalScore.gameObject.SetActive(false);
+            backButton.SetActive(false);
             Continue();
         }
         scoreBoard.text = string.Format("score: {00}", score);
