@@ -14,7 +14,7 @@ public class MovingBlock : MonoBehaviour
         if (transform.position.z <= -_reset)
         {
             transform.position += Vector3.back * 30f;
-            float newY = Random.Range(-3, 3);
+            float newY = Random.Range(-1.8f, 1.8f);
             transform.position = new Vector3(transform.position.x, newY, startingZPosition);
         }
     }
