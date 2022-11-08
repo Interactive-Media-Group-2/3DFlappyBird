@@ -68,5 +68,10 @@ public class movement : MonoBehaviour
         {
             score++;
         }
+
+        if (other.tag == "Coin")
+        {
+            score += 2;
+        }
     }
 }
